@@ -1,8 +1,28 @@
 <div class="login-container">
   <h1>Login Test</h1>
+  <div>
+    <form (ngSubmit)="login()">
+      <label for="Email">Email:</label>
+      <input
+        type="text"
+        id="Email"
+        name="Email"
+        [(ngModel)]="_userEmail"
+        required
+      />
 
-  <button (click)="login()">Test Login</button>
+      <label for="password">Password:</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        [(ngModel)]="_password"
+        required
+      />
 
+      <button type="submit">Login</button>
+    </form>
+  </div>
   <div *ngIf="userName" class="user-info">
     <h2>User Information:</h2>
     <p>Name: {{ userName }}</p>

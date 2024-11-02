@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ApiService } from './../services/api.service';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 interface UserResponse {
   message: string;
@@ -14,7 +15,7 @@ interface UserResponse {
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -23,6 +24,9 @@ export class LoginComponent {
   userName: string = '';
   userEmail: string = '';
   error: string = '';
+  password: string = '';
+  _userEmail: string = '';
+  _password: string = '';
 
   constructor(api: ApiService) {
     this.api = api;
@@ -30,8 +34,8 @@ export class LoginComponent {
 
   login() {
     const credentials = {
-      email: 'kij@efe',
-      password: '123456',
+      email: this._userEmail,
+      password: this._password,
     };
 
     this.api
