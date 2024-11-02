@@ -22,6 +22,7 @@ export class LoginComponent {
   api: ApiService;
   userName: string = '';
   userEmail: string = '';
+  error: string = '';
 
   constructor(api: ApiService) {
     this.api = api;
