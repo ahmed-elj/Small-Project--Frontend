@@ -1,5 +1,5 @@
-<div class="login-container">
-  <h1>Login Test</h1>
+<div class="signup-container">
+  <h1>Signup Test</h1>
   <div>
     <form (ngSubmit)="signup()">
       <label for="Email">Name:</label>
@@ -28,8 +28,9 @@
         required
       />
 
-      <button type="submit">Login</button>
+      <button type="submit">signup</button>
     </form>
+    <a href="./login">login</a>
   </div>
   <div *ngIf="message" class="user-info">
     <h2>User created!</h2>

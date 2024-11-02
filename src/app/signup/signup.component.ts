@@ -21,7 +21,7 @@ export class SignupComponent {
   _user = {
     name: '',
     email: '',
-    password: ''
+    password: '',
   };
 
   signup() {
@@ -38,10 +38,12 @@ export class SignupComponent {
       .post<string>('http://localhost:3000/api/signup', formData)
       .subscribe({
         next: (response) => {
-          console.log((this.message = response));
-          this.message = 'User created successfully';
+          this.Error = '';
+          this.message = 'User created successfully:' + response;
+          console.log('successfully created user: ' + this.message);
         },
         error: (error) => {
+          this.message = '';
           console.log(error);
           return error;
         },
