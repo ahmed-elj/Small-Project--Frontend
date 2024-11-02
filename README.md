@@ -1,27 +1,81 @@
-# FrontEnd
+# Angular Authentication Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.4.
+## Description
+A modern authentication system built with Angular 17.3.4, featuring user registration and login functionality. This frontend application communicates with a Node.js/Express backend running on localhost:3000.
 
-## Development server
+## Features
+- User Registration (Signup)
+- User Authentication (Login)
+- Responsive Design
+- Form Validation
+- Error Handling
+- JWT Token-based Authentication
+- RESTful API Integration
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Tech Stack
+- Angular 17.3.4
+- TypeScript
+- RxJS
+- Angular Forms
+- Angular Router
+- Angular HTTP Client
 
-## Code scaffolding
+## Prerequisites
+- Node.js (Latest LTS version)
+- npm (Node Package Manager)
+- Angular CLI 17.3.4
+- Backend server running on localhost:3000
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Installation
 
-## Build
+1. Clone the repository
+2. Install dependencies:
+```bash
+npm install
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+3. Start the development server:
+```bash
+npm start
+```
 
-## Running unit tests
+The application will be available at `http://localhost:4200`
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Project Structure
+- `/src/app/login` - Login component and related files
+- `/src/app/signup` - Signup component and related files
+- `/src/app/services` - API service for backend communication
 
-## Running end-to-end tests
+## API Integration
+The frontend communicates with a backend server running on `http://localhost:3000` with the following endpoints:
+- POST `/api/signup` - User registration
+- POST `/api/login` - User authentication
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Development
+To create new components:
+```bash
+npm run new-comp component-name
+```
 
-## Further help
+## Available Scripts
+- `npm start` - Starts development server
+- `npm run build` - Builds the application
+- `npm test` - Runs unit tests
+- `npm run watch` - Builds in watch mode
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Backend Connection
+This frontend application requires the backend server to be running. The backend provides:
+- User authentication
+- Password encryption
+- JWT token generation
+- MongoDB database integration
+
+## Contributing
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## License
+This project is licensed under the ISC License.
