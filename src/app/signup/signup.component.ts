@@ -26,12 +26,24 @@ export class SignupComponent {
 
   signup() {
     // Get the form data
-
     const formData = {
       name: this._user.name,
       email: this._user.email,
       password: this._user.password,
     };
+
+    // Validate the form data
+    if (
+      this._user.name.length < 4 ||
+      this._user.email.length < 5 ||
+      this._user.email.search('@') == -1 ||
+      this._user.password.length < 6
+    ) {
+      this.message = '';
+      this.Error =
+        '<h2 align="center">check all fields</h2><p>must use a valid email, or name, and a good password</p>';
+      return;
+    }
 
     // Call the API to create a new user
     this.api
