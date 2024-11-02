@@ -1,0 +1,15 @@
+<div class="login-container">
+  <h1>Login Test</h1>
+
+  <button (click)="login()">Test Login</button>
+
+  <div *ngIf="userName" class="user-info">
+    <h2>User Information:</h2>
+    <p>Name: {{ userName }}</p>
+    <p>Email: {{ userEmail }}</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+</div>

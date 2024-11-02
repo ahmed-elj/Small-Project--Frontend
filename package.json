@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "new-comp": "ng g component",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -12,7 +13,7 @@
   "dependencies": {
     "@angular/animations": "^17.3.0",
     "@angular/common": "^17.3.0",
-    "@angular/compiler": "^17.3.0",
+    "@angular/compiler": "^17.3.12",
     "@angular/core": "^17.3.0",
     "@angular/forms": "^17.3.0",
     "@angular/platform-browser": "^17.3.0",
