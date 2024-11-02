@@ -37,6 +37,21 @@ export class LoginComponent {
       email: this._userEmail,
       password: this._password,
     };
+    this.api
+      .post<UserResponse>('http://localhost:3000/api/login', credentials)
+      .subscribe({
+        next: (response) => {
+          console.log('Login successful:', response);
+          this.userName = response.user.name;
+          this.userEmail = response.user.email;
+          this.error = '';// to clear the error message
+        },
+        error: (error) => {
+          console.error('Error during login:', error);
+          this.error = error.message;
+          this.userName= ''; // to clear the info
+        }
+      });
     try {
       this.api
         .post<UserResponse>('http://localhost:3000/api/login', credentials)
