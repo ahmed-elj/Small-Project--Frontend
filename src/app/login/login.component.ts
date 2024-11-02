@@ -9,7 +9,7 @@ interface UserResponse {
   user: {
     name: string;
     email: string;
-  }
+  };
 }
 
 @Component({
@@ -25,33 +25,35 @@ export class LoginComponent {
   userEmail: string = '';
   error: string = '';
   password: string = '';
-  _userEmail: string = '';
-  _password: string = '';
+  _userEmail: string = ''; //input
+  _password: string = ''; //input
 
   constructor(api: ApiService) {
     this.api = api;
   }
 
-  login() {
+  login(): any {
     const credentials = {
       email: this._userEmail,
       password: this._password,
     };
-
-    this.api
-      .post<UserResponse>(
-        'http://localhost:3000/api/login',
-        credentials
-      )
-      .subscribe({
-        next: (response) => {
-          console.log('Login successful:', response);
-          this.userName = response.user.name;
-          this.userEmail = response.user.email;
-        },
-        error: (error) => {
-          console.error('Error during login:', error);
-        }
-      });
+    try {
+      this.api
+        .post<UserResponse>('http://localhost:3000/api/login', credentials)
+        .subscribe({
+          next: (response) => {
+            console.log('Login successful:', response);
+            this.userName = response.user.name;
+            this.userEmail = response.user.email;
+          },
+          error: (error) => {
+            console.error('Error during login:', error);
+            this.error = error.message;
+          },
+        });
+    } catch (error) {
+      console.log(error);
+      return error="an error occured!";
+    }
   }
 }
