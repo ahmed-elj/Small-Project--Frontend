@@ -7,6 +7,7 @@
         type="text"
         id="Name"
         name="Name"
+        placeholder="Name"
         [(ngModel)]="_user.name"
         required
       />
@@ -15,6 +16,7 @@
         type="text"
         id="Email"
         name="Email"
+        placeholder="example@mail.com"
         [(ngModel)]="_user.email"
         required
       />
@@ -24,19 +26,20 @@
         type="password"
         id="password"
         name="password"
+        placeholder="write more than 6 characters"
         [(ngModel)]="_user.password"
         required
       />
 
       <button type="submit">signup</button>
     </form>
-    <a href="./login">login</a>
+    <a style="text-align: center" href="./login">login</a>
   </div>
   <div *ngIf="message" class="user-info">
     <h2>User created!</h2>
   </div>
 
   <div *ngIf="Error" class="error-message">
-    <p>{{ Error }}</p>
+    <p [innerHTML]="Error">{{ Error }}</p>
   </div>
 </div>

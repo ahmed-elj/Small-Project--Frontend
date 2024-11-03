@@ -1,3 +1,4 @@
+import { CredentialsService } from './../services/credentials.service';
 import { Component } from '@angular/core';
 import { ApiService } from './../services/api.service';
 import { CommonModule } from '@angular/common';
@@ -12,6 +13,12 @@ interface UserResponse {
   };
 }
 
+interface User {
+  name: string;
+  email: string;
+  password: string;
+}
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -20,55 +27,54 @@ interface UserResponse {
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
+  user: User = { name: '', email: '', password: '' };
+  _user: User = { name: '', email: '', password: '' };
   api: ApiService;
-  userName: string = '';
-  userEmail: string = '';
   error: string = '';
-  password: string = '';
-  _userEmail: string = ''; //input
-  _password: string = ''; //input
+  cred: CredentialsService;
 
-  constructor(api: ApiService) {
+  constructor(api: ApiService, private CredentialsService: CredentialsService) {
     this.api = api;
+    this.cred = CredentialsService;
   }
-
   login(): any {
     const credentials = {
-      email: this._userEmail,
-      password: this._password,
+      email: this._user.email,
+      password: this._user.password,
     };
-    this.api
-      .post<UserResponse>('http://localhost:3000/api/login', credentials)
-      .subscribe({
-        next: (response) => {
-          console.log('Login successful:', response);
-          this.userName = response.user.name;
-          this.userEmail = response.user.email;
-          this.error = '';// to clear the error message
-        },
-        error: (error) => {
-          console.error('Error during login:', error);
-          this.error = error.message;
-          this.userName= ''; // to clear the info
-        }
-      });
+
+    if (
+      this._user.email.length < 4 ||
+      this._user.email.search('@') < 0 ||
+      this._user.password.length < 6
+    ) {
+      return (this.error = 'Please check in all fields');
+    }
     try {
+      console.log('Login attempt:', credentials);
       this.api
         .post<UserResponse>('http://localhost:3000/api/login', credentials)
         .subscribe({
           next: (response) => {
             console.log('Login successful:', response);
-            this.userName = response.user.name;
-            this.userEmail = response.user.email;
+            this.user.name = response.user.name;
+            this.user.email = response.user.email;
+            this.error = ''; // to clear the error message
+            this.cred.setUser(
+              response.user.name,
+              response.user.email,
+              this._user.password
+            );
           },
           error: (error) => {
             console.error('Error during login:', error);
             this.error = error.message;
+            this.user.name = ''; // to clear the info
           },
         });
     } catch (error) {
       console.log(error);
-      return error="an error occured!";
+      return (error = 'an error occured!');
     }
   }
 }
