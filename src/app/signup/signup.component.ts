@@ -34,7 +34,7 @@ export class SignupComponent {
 
     // Validate the form data
     if (
-      this._user.name.length < 4 ||
+      this._user.name.length < 3 ||
       this._user.email.length < 5 ||
       this._user.email.search('@') == -1 ||
       this._user.password.length < 6

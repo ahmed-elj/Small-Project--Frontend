@@ -12,6 +12,12 @@ interface UserResponse {
   };
 }
 
+interface User {
+  name: string;
+  email: string;
+  password: string;
+}
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -20,13 +26,11 @@ interface UserResponse {
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
+  user: User = { name: '', email: '', password: '' };
+  _user: User = { name: '', email: '', password: '' };
   api: ApiService;
-  userName: string = '';
-  userEmail: string = '';
   error: string = '';
-  password: string = '';
-  _userEmail: string = ''; //input
-  _password: string = ''; //input
+
 
   constructor(api: ApiService) {
     this.api = api;
@@ -34,23 +38,32 @@ export class LoginComponent {
 
   login(): any {
     const credentials = {
-      email: this._userEmail,
-      password: this._password,
+      email: this._user.email,
+      password: this._user.password,
     };
+
+    if (
+      this._user.email.length < 4 ||
+      this._user.email.search('@') < 0 ||
+      this._user.password.length < 6
+    ) {
+      return (this.error = 'Please check in all fields');
+    }
+
     this.api
       .post<UserResponse>('http://localhost:3000/api/login', credentials)
       .subscribe({
         next: (response) => {
           console.log('Login successful:', response);
-          this.userName = response.user.name;
-          this.userEmail = response.user.email;
-          this.error = '';// to clear the error message
+          this.user.name= response.user.name;
+          this.user.email = response.user.email;
+          this.error = ''; // to clear the error message
         },
         error: (error) => {
           console.error('Error during login:', error);
           this.error = error.message;
-          this.userName= ''; // to clear the info
-        }
+          this.user.name = ''; // to clear the info
+        },
       });
     try {
       this.api
@@ -58,8 +71,8 @@ export class LoginComponent {
         .subscribe({
           next: (response) => {
             console.log('Login successful:', response);
-            this.userName = response.user.name;
-            this.userEmail = response.user.email;
+            this.user.name = response.user.name;
+            this.user.email = response.user.email;
           },
           error: (error) => {
             console.error('Error during login:', error);
@@ -68,7 +81,7 @@ export class LoginComponent {
         });
     } catch (error) {
       console.log(error);
-      return error="an error occured!";
+      return (error = 'an error occured!');
     }
   }
 }
