@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class CredentialsService {
-  private user:any= null;
+  private user:any;
   constructor() { }
 
 
@@ -16,10 +16,17 @@ export class CredentialsService {
       email: _email,
       password: _password
     }
+    localStorage.setItem('user', JSON.stringify(this.user));
+    console.log("user entered: " + this.user.name);
   }
 
   getUser() {
-    return this.user;
+    this.user = JSON.parse(localStorage.getItem('user') as string);
+    if (this.user) {
+        console.log("getuser: " + this.user.name);
+        return this.user;
+    }
+    return null;
   }
 
 }

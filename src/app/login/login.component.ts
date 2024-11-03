@@ -65,7 +65,6 @@ export class LoginComponent {
               response.user.email,
               this._user.password
             );
-            console.log(this.cred.getUser().name);
           },
           error: (error) => {
             console.error('Error during login:', error);
