@@ -1,3 +1,4 @@
+import { CredentialsService } from './../services/credentials.service';
 import { Component } from '@angular/core';
 import { ApiService } from './../services/api.service';
 import { CommonModule } from '@angular/common';
@@ -30,12 +31,12 @@ export class LoginComponent {
   _user: User = { name: '', email: '', password: '' };
   api: ApiService;
   error: string = '';
+  cred: CredentialsService;
 
-
-  constructor(api: ApiService) {
+  constructor(api: ApiService, private CredentialsService: CredentialsService) {
     this.api = api;
+    this.cred = CredentialsService;
   }
-
   login(): any {
     const credentials = {
       email: this._user.email,
@@ -49,23 +50,8 @@ export class LoginComponent {
     ) {
       return (this.error = 'Please check in all fields');
     }
-
-    this.api
-      .post<UserResponse>('http://localhost:3000/api/login', credentials)
-      .subscribe({
-        next: (response) => {
-          console.log('Login successful:', response);
-          this.user.name= response.user.name;
-          this.user.email = response.user.email;
-          this.error = ''; // to clear the error message
-        },
-        error: (error) => {
-          console.error('Error during login:', error);
-          this.error = error.message;
-          this.user.name = ''; // to clear the info
-        },
-      });
     try {
+      console.log('Login attempt:', credentials);
       this.api
         .post<UserResponse>('http://localhost:3000/api/login', credentials)
         .subscribe({
@@ -73,10 +59,18 @@ export class LoginComponent {
             console.log('Login successful:', response);
             this.user.name = response.user.name;
             this.user.email = response.user.email;
+            this.error = ''; // to clear the error message
+            this.cred.setUser(
+              response.user.name,
+              response.user.email,
+              this._user.password
+            );
+            console.log(this.cred.getUser().name);
           },
           error: (error) => {
             console.error('Error during login:', error);
             this.error = error.message;
+            this.user.name = ''; // to clear the info
           },
         });
     } catch (error) {
