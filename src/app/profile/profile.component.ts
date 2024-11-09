@@ -14,6 +14,7 @@ export class ProfileComponent {
   name = '';
   email = '';
   password = '';
+  role = 'user';
 
   constructor(private credentialsService: CredentialsService) {
     user = this.credentialsService.getUser();
@@ -25,11 +26,11 @@ export class ProfileComponent {
       this.name = user.name;
       this.email = user.email;
       this.password = user.password;
+      this.role = user.role;
       console.log('connected profile! ' + user.name);
-      localStorage.removeItem('user');
+      // localStorage.removeItem('user');
     } else {
       console.log('not connected profile!');
-      // Optionally, you might want to initialize with empty values
       this.name = '';
       this.email = '';
       this.password = '';

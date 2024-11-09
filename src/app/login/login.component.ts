@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { ApiService } from './../services/api.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 interface UserResponse {
   message: string;
@@ -10,6 +11,7 @@ interface UserResponse {
   user: {
     name: string;
     email: string;
+    role: string;
   };
 }
 
@@ -33,10 +35,15 @@ export class LoginComponent {
   error: string = '';
   cred: CredentialsService;
 
-  constructor(api: ApiService, private CredentialsService: CredentialsService) {
+  constructor(
+    api: ApiService,
+    private CredentialsService: CredentialsService,
+    private router: Router
+  ) {
     this.api = api;
     this.cred = CredentialsService;
   }
+
   login(): any {
     const credentials = {
       email: this._user.email,
@@ -63,8 +70,10 @@ export class LoginComponent {
             this.cred.setUser(
               response.user.name,
               response.user.email,
-              this._user.password
+              this._user.password,
+              response.user.role
             );
+            this.router.navigate(['/profile']);
           },
           error: (error) => {
             console.error('Error during login:', error);
